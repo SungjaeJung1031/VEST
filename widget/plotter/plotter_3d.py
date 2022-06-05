@@ -34,7 +34,7 @@ class GroundGraphics(object):
         self.w = width
         self.res = 10
         self.n_sq = self.res**2
-        self.n_vert = 6 * self.n_sq
+        self.n_vert = 4 * self.n_sq
 
         # Define the vertex (x,y,z) values as a grid:
         self.vx = np.linspace(-0.5*self.len, 0.5*self.len, self.res + 1)
@@ -47,15 +47,10 @@ class GroundGraphics(object):
         sq_ind = 0
         for i in range(self.res):
             for j in range(self.res):
-                # Upper triangle in square:
-                self.vert[6 * sq_ind,:] = np.array([self.vx[i], self.vy[j], self.vz[i, j]])
-                self.vert[6 * sq_ind + 1,:] = np.array([self.vx[i+1], self.vy[j+1], self.vz[i+1, j+1]])
-                self.vert[6 * sq_ind + 2,:] = np.array([self.vx[i], self.vy[j+1], self.vz[i, j+1]])
-
-                # Lower triangle in square:
-                self.vert[6 * sq_ind + 3,:] = np.array([self.vx[i], self.vy[j], self.vz[i, j]])
-                self.vert[6 * sq_ind + 4,:] = np.array([self.vx[i+1], self.vy[j], self.vz[i+1, j]])
-                self.vert[6 * sq_ind + 5,:] = np.array([self.vx[i+1], self.vy[j+1], self.vz[i+1, j+1]])
+                self.vert[4 * sq_ind,:] = np.array([self.vx[i], self.vy[j], self.vz[i, j]])
+                self.vert[4 * sq_ind + 1,:] = np.array([self.vx[i], self.vy[j+1], self.vz[i, j+1]])
+                self.vert[4 * sq_ind + 2,:] = np.array([self.vx[i+1], self.vy[j+1], self.vz[i+1, j+1]])
+                self.vert[4 * sq_ind + 3,:] = np.array([self.vx[i+1], self.vy[j], self.vz[i+1, j]])
 
                 sq_ind += 1
 
@@ -85,18 +80,19 @@ class GroundGraphics(object):
             gl.glVertexPointer(3, gl.GL_FLOAT, self.vert_stride, self.vert_vbo)
 
             # Set the polygons to have front and back faces and to not be filled:
-            gl.glColor3f(1.0, 1.0, 1.0)
+            gl.glColor4f(1.0, 0.0, 1.0, 0.0)
+            gl.glLineWidth(3)
             gl.glPolygonMode(gl.GL_FRONT_AND_BACK, gl.GL_LINE)
 
             # Render triangle edges using the loaded vertex pointer data:
-            gl.glDrawArrays(gl.GL_TRIANGLES, 0, self.n_vert)
+            gl.glDrawArrays(gl.GL_QUADS, 0, self.n_vert)
 
             # Set the polygons to have front and back faces and to not be filled:
-            gl.glColor3f(0.5, 0.5, 0.5)
+            gl.glColor3f(1, 1, 1)
             gl.glPolygonMode(gl.GL_FRONT_AND_BACK, gl.GL_FILL)
 
             # Render triangle faces using the loaded vertex pointer data:
-            gl.glDrawArrays(gl.GL_TRIANGLES, 0, self.n_vert)
+            gl.glDrawArrays(gl.GL_QUADS, 0, self.n_vert)
 
         except Exception as e:
             print(e)
@@ -204,7 +200,7 @@ class Plotter3D(QGLWidget):
         # QColor is specified as RGB ints (0-255).  Specify this clear
         # color once and call glClear(GL_COLOR_BUFFER_BIT) before each
         # round of rendering (in paintGL):
-        self.qglClearColor(QColor(100, 100, 100)) # a grey background
+        self.qglClearColor(QColor(255, 255, 255)) # a grey background
                 
         # Enable the depth buffer:
         gl.glEnable(gl.GL_DEPTH_TEST)
