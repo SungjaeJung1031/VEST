@@ -1,18 +1,24 @@
 
-from PyQt5.QtCore import Qt      # core Qt functionality
-from PyQt5.QtGui import QColor, QKeyEvent       # extends QtCore with GUI functionality
-from PyQt5.QtOpenGL import *    # provides QGLWidget, a special OpenGL QWidget
+from PyQt5.QtCore import Qt         # core Qt functionality
+from PyQt5.QtGui import QColor, \
+                        QKeyEvent   # extends QtCore with GUI functionality    
+from PyQt5.QtOpenGL import *        # provides QGLWidget, a special OpenGL QWidget
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtOpenGL import QGLWidget
 
-import OpenGL.GL as gl        # python wrapping of OpenGL
-from OpenGL import GLU        # OpenGL Utility Library, extends OpenGL functionality
+import OpenGL.GL as gl              # python wrapping of OpenGL
+from OpenGL import GLU              # OpenGL Utility Library, extends OpenGL functionality
 
-import sys                    # we'll need this later to run our Qt application
+import sys                          # we'll need this later to run our Qt application
 
-from OpenGL.arrays import vbo    # used to store VBO data
-import numpy as np               # general matrix/array math
+from OpenGL.arrays import vbo       # used to store VBO data
+import numpy as np
+from value_types.enum_color import EnumColor                  # general matrix/array math
 
+from widget.plotter.detection_graphics import DetectionGraphics
+from widget.plotter.object_graphics import ObjectGraphics
+
+from value_types.valtype_object import DataclsObject
 
 class GroundGraphics(object):
     """
@@ -32,21 +38,22 @@ class GroundGraphics(object):
         # Store the grid dimensions and compute number of squares and vertices
         self.len = length
         self.w = width
-        self.res = 10
-        self.n_sq = self.res**2
+        self.res_x = 400
+        self.res_y = 400
+        self.n_sq = self.res_x * self.res_y
         self.n_vert = 4 * self.n_sq
 
         # Define the vertex (x,y,z) values as a grid:
-        self.vx = np.linspace(-0.5*self.len, 0.5*self.len, self.res + 1)
-        self.vy = np.linspace(-0.5*self.w, 0.5*self.w, self.res + 1)
-        self.vz = np.zeros((self.res + 1, self.res + 1))
+        self.vx = np.linspace(-0.025*self.len, 0.025*self.len, self.res_x + 1)
+        self.vy = np.linspace(-0.025*self.w, 0.025*self.w, self.res_y + 1)
+        self.vz = np.zeros((self.res_x + 1, self.res_y + 1))
 
         self.vert = np.zeros((self.n_vert, 3))
 
         # Organize the vertices into triangles for storing in a VBO:
         sq_ind = 0
-        for i in range(self.res):
-            for j in range(self.res):
+        for i in range(self.res_x):
+            for j in range(self.res_y):
                 self.vert[4 * sq_ind,:] = np.array([self.vx[i], self.vy[j], self.vz[i, j]])
                 self.vert[4 * sq_ind + 1,:] = np.array([self.vx[i], self.vy[j+1], self.vz[i, j+1]])
                 self.vert[4 * sq_ind + 2,:] = np.array([self.vx[i+1], self.vy[j+1], self.vz[i+1, j+1]])
@@ -156,6 +163,16 @@ class AxesGraphics(object):
         self.y_axis = VectorGraphics()
         self.z_axis = VectorGraphics()
 
+        self.tmp_dtct = DetectionGraphics(0.0, 0.0, 0.0, 0)
+        self.tmp_datacls_obj = DataclsObject()
+        self.tmp_datacls_obj.pos_lat = -1.0
+        self.tmp_datacls_obj.pos_long = 1.0
+        self.tmp_datacls_obj.pos_vert = 0.0
+        self.tmp_datacls_obj.len = 3.0
+        self.tmp_datacls_obj.width = 1.0
+        self.tmp_object = ObjectGraphics(self.tmp_datacls_obj, 1.0, EnumColor.RED)
+
+
     def render(self, R, t):
         self.x_axis.render(t, R[:,0],
                            0.3, 0.01, np.array([1.0, 0.0, 0.0]))
@@ -163,6 +180,9 @@ class AxesGraphics(object):
                            0.3, 0.01, np.array([0.0, 1.0, 0.0]))
         self.z_axis.render(t, R[:,2],
                            0.3, 0.01, np.array([0.0, 0.0, 1.0]))
+
+        self.tmp_dtct.render()
+        self.tmp_object.render()
 
             
 class Plotter3D(QGLWidget):
@@ -209,15 +229,15 @@ class Plotter3D(QGLWidget):
         self.initGeometry()
 
         # Initialize the ground plane graphics geometry
-        self.ground_graphics = GroundGraphics(length=10.0, width=10.0)
+        self.ground_graphics = GroundGraphics(length=400.0, width=400.0)
 
         # Initialize the origin axes graphics geometry
         self.origin_axes_graphics = AxesGraphics()
         
         # Initialize the camera state and set the initial view
-        self.eye_r = 20.0     # camera radius, in meters
-        self.eye_th = 1.0     # camera azimuth angle, in radians
-        self.eye_phi = 1.0    # camera elevation angle, in radians
+        self.eye_r = 7.0     # camera radius, in meters
+        self.eye_th = -1.5707     # camera azimuth angle, in radians
+        self.eye_phi = 0.8   # camera elevation angle, in radians
         self.center_pos = np.array([0.0, 0.0, 0.0])
         self.update_view()
 
