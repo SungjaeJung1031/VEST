@@ -16,6 +16,7 @@ import numpy as np
 from value_types.enum_color import EnumColor                  # general matrix/array math
 
 from widget.plotter.detection_graphics import DetectionGraphics
+from widget.plotter.fov_graphics import FovGraphics
 from widget.plotter.object_graphics import ObjectGraphics
 
 from value_types.valtype_object import DataclsObject
@@ -163,26 +164,24 @@ class AxesGraphics(object):
         self.y_axis = VectorGraphics()
         self.z_axis = VectorGraphics()
 
-        self.tmp_dtct = DetectionGraphics(0.0, 0.0, 0.0, 0)
         self.tmp_datacls_obj = DataclsObject()
-        self.tmp_datacls_obj.pos_lat = -1.0
-        self.tmp_datacls_obj.pos_long = 1.0
-        self.tmp_datacls_obj.pos_vert = 0.0
-        self.tmp_datacls_obj.len = 3.0
-        self.tmp_datacls_obj.width = 1.0
-        self.tmp_object = ObjectGraphics(self.tmp_datacls_obj, 1.0, EnumColor.RED)
 
+        self.tmp_dtct = DetectionGraphics(0.0, 0.0, 0.0, 0)
+        self.tmp_object = ObjectGraphics(self.tmp_datacls_obj, 1.0, EnumColor.RED)
+        self.tmp_fov = FovGraphics()
 
     def render(self, R, t):
         self.x_axis.render(t, R[:,0],
                            0.3, 0.01, np.array([1.0, 0.0, 0.0]))
-        self.y_axis.render(t, R[:,1],
+        self.y_axis.render(t, R[:,1
+        ],
                            0.3, 0.01, np.array([0.0, 1.0, 0.0]))
         self.z_axis.render(t, R[:,2],
                            0.3, 0.01, np.array([0.0, 0.0, 1.0]))
 
         self.tmp_dtct.render()
         self.tmp_object.render()
+        self.tmp_fov.render()
 
             
 class Plotter3D(QGLWidget):
