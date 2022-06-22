@@ -1,9 +1,15 @@
 import sys
+import os
 
-from PyQt5.QtWidgets    import QAction, QWidget, QMainWindow, qApp
+from PyQt5.QtWidgets    import QAction, QWidget, QMainWindow, \
+                               QFileDialog, QLabel, qApp
 from PyQt5.QtGui        import QIcon
 
 from layout_main        import LayoutMain
+
+
+import loaded_data
+import loaded_data_mgr
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -11,6 +17,8 @@ class MainWindow(QMainWindow):
         self.main_widget = QWidget(self)
         self.qss_main = open('resource/qss/style_main.qss').read()
         self.setStyleSheet(self.qss_main)
+
+        loaded_data.init()
 
         self.menubar = self.menuBar()
         self.action_load = QAction(QIcon('resource/img/import-24.png'),'Load', self)
@@ -34,7 +42,7 @@ class MainWindow(QMainWindow):
     def initMenubar(self):
         self.action_load.setShortcut('Ctrl+L')
         self.action_load.setStatusTip('Load File')
-        # self.action_load.triggered.conenct() # TODO::
+        self.action_load.triggered.connect(self.loadLog)
 
         self.action_save.setShortcut('Ctrl+S')
         self.action_save.setStatusTip('Save File')
@@ -56,3 +64,15 @@ class MainWindow(QMainWindow):
 
     def initStatusBar(self):
         self.statusBar().showMessage('Ready')
+
+    def loadLog(self):
+        file_filter = "CSV (*.csv)"
+        dir_path = os.getcwd() + "/data/test"
+        file_paths = QFileDialog.getOpenFileNames(
+            None,
+            "Load Log Files",
+            dir_path,
+            file_filter
+        )
+
+        loaded_data_mgr.setFilePnt(file_paths)
