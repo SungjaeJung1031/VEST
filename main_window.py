@@ -8,8 +8,8 @@ from PyQt5.QtGui        import QIcon
 from layout_main        import LayoutMain
 
 
-import loaded_data
-import loaded_data_mgr
+import g_data
+import g_data_mgr
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -18,7 +18,7 @@ class MainWindow(QMainWindow):
         self.qss_main = open('resource/qss/style_main.qss').read()
         self.setStyleSheet(self.qss_main)
 
-        loaded_data.init()
+        g_data.init()
 
         self.menubar = self.menuBar()
         self.action_load = QAction(QIcon('resource/img/import-24.png'),'Load', self)
@@ -75,4 +75,5 @@ class MainWindow(QMainWindow):
             file_filter
         )
 
-        loaded_data_mgr.setFilePnt(file_paths)
+        g_data_mgr.setLogDf(file_paths[0])
+        g_data_mgr.initGlobalData()
