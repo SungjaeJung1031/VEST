@@ -2,7 +2,7 @@ import OpenGL.GL as gl              # python wrapping of OpenGL
 from OpenGL import GLU              # OpenGL Utility Library, extends OpenGL functionality
 import numpy as np
 
-class VectorGraphics(object):
+class GraphicsVector(object):
     """
     Class for rendering a three-dimensional vector.
     """

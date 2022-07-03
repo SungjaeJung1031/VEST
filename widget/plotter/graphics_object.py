@@ -17,7 +17,7 @@ from value_types.valtype_object import DataclsObject
 
 import dataclasses
 
-class ObjectGraphics(object):
+class GraphicsObject(object):
     def __init__(self, datacls_obj:DataclsObject, scale_factor:float, color_code:EnumColor):
         """ Initialize the detection graphics object.
         Initialize the ground graphics object.

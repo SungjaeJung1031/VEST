@@ -10,15 +10,22 @@ from layout_main        import LayoutMain
 
 import g_data
 import g_data_mgr
+import g_config
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+
+        # 1. initialize global variables
+        g_data.init()
+        g_config.init()
+
         self.main_widget = QWidget(self)
         self.qss_main = open('resource/qss/style_main.qss').read()
         self.setStyleSheet(self.qss_main)
+        self.layout_main = LayoutMain(self)
 
-        g_data.init()
+
 
         self.menubar = self.menuBar()
         self.action_load = QAction(QIcon('resource/img/import-24.png'),'Load', self)
@@ -60,7 +67,7 @@ class MainWindow(QMainWindow):
         filemenu.addAction(self.action_exit)
 
     def initMainLayout(self):
-        self.main_widget.setLayout(LayoutMain(self))
+        self.main_widget.setLayout(self.layout_main)
 
     def initStatusBar(self):
         self.statusBar().showMessage('Ready')
@@ -77,3 +84,4 @@ class MainWindow(QMainWindow):
 
         g_data_mgr.setLogDf(file_paths[0])
         g_data_mgr.initGlobalData()
+        self.layout_main.initRender()

@@ -2,7 +2,7 @@ import math
 
 import OpenGL.GL as gl              # python wrapping of OpenGL
 
-class FovGraphics(object):
+class GraphicsFov(object):
     def __init__(self):
         self.pos_lat = 0.0
         self.pos_long = 0.1

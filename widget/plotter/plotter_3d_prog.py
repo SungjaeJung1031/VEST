@@ -1,23 +1,29 @@
-import resource
 import sys
 
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QSlider, QPushButton, QLineEdit
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 
+import g_data 
 class Plotter3dProg(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, o_plot3d, parent=None):
         super().__init__()
 
         self.qss_main = open('resource/qss/style_main.qss').read()
         self.parent = parent
-        self.hboxlyt_plot_3d_prog = QHBoxLayout()
-        self.slider_plot_3d_prog = QSlider(Qt.Horizontal, self)
-        self.slider_plot_3d_prog.setStyleSheet(self.qss_main)
+        self.o_plot3d = o_plot3d
+        self.hboxlyt_plot3d_prog = QHBoxLayout()
+        self.slider_plot3d_prog = QSlider(Qt.Horizontal, self)
+        self.slider_plot3d_prog.setMaximum(0)
+        self.slider_plot3d_prog.valueChanged.connect(self.handleSliderValueChanged)
+        # self.slider_plot3d_prog.setStyleSheet(self.qss_main)
+        # self.slider_plot3d_prog.setTickInterval(g_data.frm_len)
+        self.slider_plot3d_prog.setTickPosition(QSlider.TicksBelow)
 
 
-        self.txtedit_plot_3d_prog = QLineEdit(self)
-        self.txtedit_plot_3d_prog.setFixedWidth(80)
+        self.txtedit_plot3d_prog = QLineEdit(self)
+        self.txtedit_plot3d_prog.setFixedWidth(80)
+        self.txtedit_plot3d_prog.setText(str(g_data.cur_frm))
         # self.field.returnPressed.connect(self.onClick)        // TODO::
 
         self.btn_prev = QPushButton('', self)
@@ -53,18 +59,23 @@ class Plotter3dProg(QWidget):
         self.btn_next.setObjectName("btn_plotter_3d_prog")
         self.btn_next.setStyleSheet(self.qss_main)
 
-        self.hboxlyt_plot_3d_prog.addWidget(self.slider_plot_3d_prog)
-        self.hboxlyt_plot_3d_prog.addWidget(self.txtedit_plot_3d_prog)
-        self.hboxlyt_plot_3d_prog.addWidget(self.btn_prev)
-        self.hboxlyt_plot_3d_prog.addWidget(self.btn_pause)
-        self.hboxlyt_plot_3d_prog.addWidget(self.btn_play)
-        self.hboxlyt_plot_3d_prog.addWidget(self.btn_stop)
-        self.hboxlyt_plot_3d_prog.addWidget(self.btn_next)
+        self.hboxlyt_plot3d_prog.addWidget(self.slider_plot3d_prog)
+        self.hboxlyt_plot3d_prog.addWidget(self.txtedit_plot3d_prog)
+        self.hboxlyt_plot3d_prog.addWidget(self.btn_prev)
+        self.hboxlyt_plot3d_prog.addWidget(self.btn_pause)
+        self.hboxlyt_plot3d_prog.addWidget(self.btn_play)
+        self.hboxlyt_plot3d_prog.addWidget(self.btn_stop)
+        self.hboxlyt_plot3d_prog.addWidget(self.btn_next)
 
-        self.setLayout(self.hboxlyt_plot_3d_prog)
+        self.setLayout(self.hboxlyt_plot3d_prog)
 
     def handlePrevButton(self):
-        pass
+        if (0 < g_data.cur_frm):
+            g_data.cur_frm = g_data.cur_frm - 1
+            self.slider_plot3d_prog.setValue(g_data.cur_frm)
+            self.txtedit_plot3d_prog.setText(str(g_data.cur_frm))
+        else:
+            pass
 
     def handlePauseButton(self):
         pass
@@ -73,7 +84,21 @@ class Plotter3dProg(QWidget):
         pass
 
     def handleStopButton(self):
-        pass
+        g_data.cur_frm = 0
+        self.slider_plot3d_prog.setValue(0)
 
     def handleNextButton(self):
-        pass
+        if (g_data.cur_frm < g_data.frm_len - 1):
+            g_data.cur_frm = g_data.cur_frm + 1
+            self.slider_plot3d_prog.setValue(g_data.cur_frm)
+            self.txtedit_plot3d_prog.setText(str(g_data.cur_frm))
+        else:
+            pass
+
+    def handleSliderValueChanged(self):
+        g_data.cur_frm = self.slider_plot3d_prog.value()
+        self.txtedit_plot3d_prog.setText(str(g_data.cur_frm))
+
+    def initRender(self):
+        g_data.cur_frm = 0
+        self.slider_plot3d_prog.setMaximum(g_data.frm_len-1)

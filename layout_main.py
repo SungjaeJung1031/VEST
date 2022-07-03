@@ -21,9 +21,10 @@ class LayoutMain(QHBoxLayout):
         self.gbox_plotter_3d = QGroupBox('3D-Plotter')
         self.vlyt_plotter_3d = QVBoxLayout()
 
-        self.plotter_3d_prog = Plotter3dProg()
-        self.plotter_3d_opt = Plotter3dOption()
         self.plotter_3d = Plotter3D(self.main_window)
+        self.plotter_3d_prog = Plotter3dProg(o_plot3d=self.plotter_3d)
+        self.plotter_3d_opt = Plotter3dOption(o_plot3d=self.plotter_3d)
+        
 
         self.setTimerPlotter3D()
 
@@ -52,3 +53,8 @@ class LayoutMain(QHBoxLayout):
         timerPlotter3D.setInterval(20)      # period, in milliseconds
         timerPlotter3D.timeout.connect(self.plotter_3d.updateGL)
         timerPlotter3D.start()
+
+    def initRender(self):
+        self.plotter_3d_prog.initRender()
+        self.plotter_3d.initRender()
+        self.plotter_3d_opt.initRender()

@@ -15,44 +15,16 @@ from OpenGL.arrays import vbo       # used to store VBO data
 import numpy as np
 from value_types.enum_color import EnumColor                  # general matrix/array math
 
-from widget.plotter.detection_graphics import DetectionGraphics
-from widget.plotter.fov_graphics import FovGraphics
-from widget.plotter.object_graphics import ObjectGraphics
-from widget.plotter.vector_graphics import VectorGraphics
-from widget.plotter.ground_graphics import GroundGraphics
+from widget.plotter.graphics_detections import GraphicsDetections
+from widget.plotter.graphics_fov import GraphicsFov
+from widget.plotter.graphics_object import GraphicsObject
+from widget.plotter.graphics_ground import GraphicsGround
+from widget.plotter.graphics_axes import GraphicsAxes
 
 from value_types.valtype_object import DataclsObject
 
-
-            
-class AxesGraphics(object):
-    """
-    Class for rendering an axes (frame vectors) object.
-    """
-    
-    def __init__(self):
-        self.x_axis = VectorGraphics()
-        self.y_axis = VectorGraphics()
-        self.z_axis = VectorGraphics()
-
-        self.tmp_datacls_obj = DataclsObject()
-
-        self.tmp_dtct = DetectionGraphics(0.0, 0.0, 0.0, 0)
-        self.tmp_object = ObjectGraphics(self.tmp_datacls_obj, 1.0, EnumColor.RED)
-        self.tmp_fov = FovGraphics()
-
-    def render(self, R, t):
-        self.x_axis.render(t, R[:,0],
-                           0.3, 0.01, np.array([1.0, 0.0, 0.0]))
-        self.y_axis.render(t, R[:,1
-        ],
-                           0.3, 0.01, np.array([0.0, 1.0, 0.0]))
-        self.z_axis.render(t, R[:,2],
-                           0.3, 0.01, np.array([0.0, 0.0, 1.0]))
-
-        self.tmp_dtct.render()
-        self.tmp_object.render()
-        self.tmp_fov.render()
+import g_data
+import g_config
 
             
 class Plotter3D(QGLWidget):
@@ -99,10 +71,20 @@ class Plotter3D(QGLWidget):
         self.initGeometry()
 
         # Initialize the ground plane graphics geometry
-        self.ground_graphics = GroundGraphics(length=400.0, width=400.0)
+        graphic_ground_num_grid = 400.0
+        grahpic_ground_grid_scale_factor = 0.5
+        g_config.scale_factor_unit_vector = graphic_ground_num_grid * 0.5 / (graphic_ground_num_grid+1)
+
+        self.graphics_ground = GraphicsGround(num_grid=graphic_ground_num_grid, 
+                                            grid_scale_factor=grahpic_ground_grid_scale_factor)
 
         # Initialize the origin axes graphics geometry
-        self.origin_axes_graphics = AxesGraphics()
+        self.tmp_datacls_obj = DataclsObject()
+
+        self.graphics_origin_axes = GraphicsAxes()
+        self.graphics_dtct = GraphicsDetections()
+        self.graphics_object = GraphicsObject(self.tmp_datacls_obj, 1.0, EnumColor.RED)
+        self.graphics_fov = GraphicsFov()
         
         # Initialize the camera state and set the initial view
         self.eye_r = 7.0     # camera radius, in meters
@@ -209,12 +191,21 @@ class Plotter3D(QGLWidget):
         # Start from a blank slate each render by clearing buffers
         gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT)
         
-        self.ground_graphics.render()
+        self.graphics_ground.render(g_config.disp_opt_ground)
+        self.graphics_origin_axes.render(np.identity(3), np.zeros(3))
+        self.graphics_dtct.render()
         
-        self.origin_axes_graphics.render(np.identity(3), np.zeros(3))
+        # self.tmp_dtct.render()
+        # self.tmp_object.render()
+        # self.tmp_fov.render()
 
-        
     def initGeometry(self):
         """ Initializes any geometry not encapsulated in a class. """
 
         pass
+
+    def initRender(self):
+        self.paintGL()
+        # gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT)
+        # gl.glFlush()
+        

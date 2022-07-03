@@ -3,10 +3,11 @@ import sys
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QTabWidget, QWidget, \
                             QPushButton, QCheckBox, QGroupBox
 
-
+import g_data
 class Plotter3dOption(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, o_plot3d, parent=None):
         super().__init__()
+        self.o_plot3d = o_plot3d
         self.parent = parent
         self.tab_plot_3d_opt = QTabWidget()
         self.vboxlyt_plot_3d_opt = QVBoxLayout()
@@ -62,3 +63,6 @@ class Plotter3dOption(QWidget):
     def initUI(self):
         self.tab_plot_3d_opt.addTab(self.wdg_tab_plot, "Plot")
         self.tab_plot_3d_opt.addTab(self.wdg_tab_data, "Data")
+
+    def initRender(self):
+        pass
