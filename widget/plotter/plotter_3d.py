@@ -20,6 +20,7 @@ from widget.plotter.graphics_fov import GraphicsFov
 from widget.plotter.graphics_object import GraphicsObject
 from widget.plotter.graphics_ground import GraphicsGround
 from widget.plotter.graphics_axes import GraphicsAxes
+from widget.plotter.graphics_road import GraphicsRoad
 
 from value_types.valtype_object import DataclsObject
 
@@ -71,9 +72,9 @@ class Plotter3D(QGLWidget):
         self.initGeometry()
 
         # Initialize the ground plane graphics geometry
-        graphic_ground_num_grid = 400.0
+        graphic_ground_num_grid = 400
         grahpic_ground_grid_scale_factor = 0.5
-        g_config.scale_factor_unit_vector = graphic_ground_num_grid * 0.5 / (graphic_ground_num_grid+1)
+        g_config.unit_vector_scale_factor = graphic_ground_num_grid * 0.5 / float(graphic_ground_num_grid+1)
 
         self.graphics_ground = GraphicsGround(num_grid=graphic_ground_num_grid, 
                                             grid_scale_factor=grahpic_ground_grid_scale_factor)
@@ -85,6 +86,7 @@ class Plotter3D(QGLWidget):
         self.graphics_dtct = GraphicsDetections()
         self.graphics_object = GraphicsObject(self.tmp_datacls_obj, 1.0, EnumColor.RED)
         self.graphics_fov = GraphicsFov()
+        self.graphics_road = GraphicsRoad(1.0, 2.0, 180.0, 90.0, -5.0, 0.0, 0.0)
         
         # Initialize the camera state and set the initial view
         self.eye_r = 7.0     # camera radius, in meters
@@ -194,6 +196,7 @@ class Plotter3D(QGLWidget):
         self.graphics_ground.render(g_config.disp_opt_ground)
         self.graphics_origin_axes.render(np.identity(3), np.zeros(3))
         self.graphics_dtct.render()
+        self.graphics_road.render()
         
         # self.tmp_dtct.render()
         # self.tmp_object.render()

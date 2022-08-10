@@ -45,9 +45,9 @@ class GraphicsDetections(object):
                 azimuth = df_dtct[azimuth_key][g_data.cur_frm]
                 elevation = df_dtct[elevation_key][g_data.cur_frm]
 
-                scaled_pos_lat = g_config.scale_factor_unit_vector * rng * math.cos(azimuth)
-                scaled_pos_long = g_config.scale_factor_unit_vector * rng * math.sin(azimuth)
-                scaeld_pos_horz = g_config.scale_factor_unit_vector * rng * math.sin(elevation)
+                scaled_pos_lat = g_config.unit_vector_scale_factor * rng * math.cos(azimuth)
+                scaled_pos_long = g_config.unit_vector_scale_factor * rng * math.sin(azimuth)
+                scaled_pos_horz = g_config.unit_vector_scale_factor * rng * math.sin(elevation)
 
                 gl.glPushMatrix()
                 gl.glTranslatef(scaled_pos_lat, scaled_pos_long, 0.2)
