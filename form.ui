@@ -44,7 +44,7 @@ QPushButton{
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="vlytCentralWidget">
     <property name="spacing">
      <number>2</number>
     </property>
@@ -62,7 +62,7 @@ QPushButton{
     </property>
     <item>
      <widget class="QWidget" name="header" native="true">
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QHBoxLayout" name="hlytHeader">
        <property name="spacing">
         <number>5</number>
        </property>
@@ -86,7 +86,7 @@ QPushButton{
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <layout class="QHBoxLayout" name="hlytHeaderLeft">
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -158,7 +158,7 @@ QPushButton{
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <layout class="QHBoxLayout" name="hlytHeaderRight">
           <item>
            <widget class="QPushButton" name="changeThemeBtn">
             <property name="cursor">
@@ -213,7 +213,7 @@ QPushButton{
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QHBoxLayout" name="hlytMainBody">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -252,7 +252,7 @@ QPushButton{
            <height>0</height>
           </size>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
+         <layout class="QVBoxLayout" name="vlytLeftMenu">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -269,14 +269,14 @@ QPushButton{
            <number>0</number>
           </property>
           <item>
-           <widget class="QWidget" name="widget" native="true">
+           <widget class="QWidget" name="leftMenuFrameWrap" native="true">
             <property name="baseSize">
              <size>
               <width>0</width>
               <height>0</height>
              </size>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_4">
+            <layout class="QVBoxLayout" name="vlytLeftMenuFrameWrap">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -318,7 +318,7 @@ QPushButton{
                <property name="frameShadow">
                 <enum>QFrame::Raised</enum>
                </property>
-               <layout class="QVBoxLayout" name="verticalLayout_5">
+               <layout class="QVBoxLayout" name="vlytLeftMenuFrameTop">
                 <property name="spacing">
                  <number>0</number>
                 </property>
@@ -505,7 +505,7 @@ QPushButton{
                <property name="frameShadow">
                 <enum>QFrame::Raised</enum>
                </property>
-               <layout class="QVBoxLayout" name="verticalLayout_6">
+               <layout class="QVBoxLayout" name="vlytLeftMenuFrameBottom">
                 <property name="spacing">
                  <number>0</number>
                 </property>
@@ -661,9 +661,12 @@ QPushButton{
        </item>
        <item>
         <widget class="QWidget" name="mainBodyContent" native="true">
-         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <layout class="QVBoxLayout" name="vlytMainBodyContent">
           <item>
            <widget class="QStackedWidget" name="stackedWidget">
+            <property name="currentIndex">
+             <number>1</number>
+            </property>
             <widget class="QWidget" name="viewerPage">
              <widget class="QLabel" name="label">
               <property name="geometry">
@@ -680,18 +683,83 @@ QPushButton{
              </widget>
             </widget>
             <widget class="QWidget" name="annotationPage">
-             <widget class="QLabel" name="label_2">
+             <widget class="QWidget" name="">
               <property name="geometry">
                <rect>
-                <x>320</x>
-                <y>150</y>
-                <width>131</width>
-                <height>16</height>
+                <x>0</x>
+                <y>0</y>
+                <width>731</width>
+                <height>461</height>
                </rect>
               </property>
-              <property name="text">
-               <string>annotationPage</string>
-              </property>
+              <layout class="QVBoxLayout" name="verticalLayout" stretch="2,8">
+               <item>
+                <widget class="QTabWidget" name="tabWidget_2">
+                 <widget class="QWidget" name="tab_5">
+                  <attribute name="title">
+                   <string>Tab 1</string>
+                  </attribute>
+                 </widget>
+                 <widget class="QWidget" name="tab_6">
+                  <attribute name="title">
+                   <string>Tab 2</string>
+                  </attribute>
+                 </widget>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSplitter" name="splitter_3">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <widget class="QSplitter" name="splitter_2">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <widget class="QOpenGLWidget" name="openGLWidget_4">
+                   <property name="cursor">
+                    <cursorShape>CrossCursor</cursorShape>
+                   </property>
+                   <property name="mouseTracking">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                  <widget class="QSplitter" name="splitter">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <widget class="QOpenGLWidget" name="openGLWidget">
+                    <property name="cursor">
+                     <cursorShape>CrossCursor</cursorShape>
+                    </property>
+                   </widget>
+                   <widget class="QOpenGLWidget" name="openGLWidget_2">
+                    <property name="cursor">
+                     <cursorShape>CrossCursor</cursorShape>
+                    </property>
+                   </widget>
+                   <widget class="QOpenGLWidget" name="openGLWidget_3">
+                    <property name="cursor">
+                     <cursorShape>CrossCursor</cursorShape>
+                    </property>
+                   </widget>
+                  </widget>
+                 </widget>
+                 <widget class="QTabWidget" name="tabWidget">
+                  <widget class="QWidget" name="tab_3">
+                   <attribute name="title">
+                    <string>Tab 1</string>
+                   </attribute>
+                  </widget>
+                  <widget class="QWidget" name="tab_4">
+                   <attribute name="title">
+                    <string>Tab 2</string>
+                   </attribute>
+                  </widget>
+                 </widget>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </widget>
             <widget class="QWidget" name="analysisPage">
