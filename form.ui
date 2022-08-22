@@ -683,84 +683,105 @@ QPushButton{
              </widget>
             </widget>
             <widget class="QWidget" name="annotationPage">
-             <widget class="QWidget" name="">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>731</width>
-                <height>461</height>
-               </rect>
+             <layout class="QVBoxLayout" name="verticalLayout_2">
+              <property name="spacing">
+               <number>5</number>
               </property>
-              <layout class="QVBoxLayout" name="verticalLayout" stretch="2,8">
-               <item>
-                <widget class="QTabWidget" name="tabWidget_2">
-                 <widget class="QWidget" name="tab_5">
-                  <attribute name="title">
-                   <string>Tab 1</string>
-                  </attribute>
-                 </widget>
-                 <widget class="QWidget" name="tab_6">
-                  <attribute name="title">
-                   <string>Tab 2</string>
-                  </attribute>
-                 </widget>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSplitter" name="splitter_3">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <widget class="QSplitter" name="splitter_2">
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
-                  </property>
-                  <widget class="QOpenGLWidget" name="openGLWidget_4">
-                   <property name="cursor">
-                    <cursorShape>CrossCursor</cursorShape>
-                   </property>
-                   <property name="mouseTracking">
-                    <bool>false</bool>
-                   </property>
-                  </widget>
-                  <widget class="QSplitter" name="splitter">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <widget class="QOpenGLWidget" name="openGLWidget">
-                    <property name="cursor">
-                     <cursorShape>CrossCursor</cursorShape>
-                    </property>
-                   </widget>
-                   <widget class="QOpenGLWidget" name="openGLWidget_2">
-                    <property name="cursor">
-                     <cursorShape>CrossCursor</cursorShape>
-                    </property>
-                   </widget>
-                   <widget class="QOpenGLWidget" name="openGLWidget_3">
-                    <property name="cursor">
-                     <cursorShape>CrossCursor</cursorShape>
-                    </property>
-                   </widget>
-                  </widget>
-                 </widget>
-                 <widget class="QTabWidget" name="tabWidget">
-                  <widget class="QWidget" name="tab_3">
+              <property name="leftMargin">
+               <number>5</number>
+              </property>
+              <property name="topMargin">
+               <number>5</number>
+              </property>
+              <property name="rightMargin">
+               <number>5</number>
+              </property>
+              <property name="bottomMargin">
+               <number>5</number>
+              </property>
+              <item>
+               <layout class="QVBoxLayout" name="vlytAnnotationPage" stretch="2,8">
+                <property name="spacing">
+                 <number>5</number>
+                </property>
+                <item>
+                 <widget class="QTabWidget" name="annotationPageControl">
+                  <widget class="QWidget" name="tabAnnotationPageControlMain">
                    <attribute name="title">
                     <string>Tab 1</string>
                    </attribute>
                   </widget>
-                  <widget class="QWidget" name="tab_4">
+                  <widget class="QWidget" name="tabAnnotationControlSub">
                    <attribute name="title">
                     <string>Tab 2</string>
                    </attribute>
                   </widget>
                  </widget>
-                </widget>
-               </item>
-              </layout>
-             </widget>
+                </item>
+                <item>
+                 <widget class="QSplitter" name="hspltAnnotationPage">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="childrenCollapsible">
+                   <bool>false</bool>
+                  </property>
+                  <widget class="QSplitter" name="vsplitAnnotationPageView">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="childrenCollapsible">
+                    <bool>false</bool>
+                   </property>
+                   <widget class="QOpenGLWidget" name="openGLWidget_4">
+                    <property name="cursor">
+                     <cursorShape>CrossCursor</cursorShape>
+                    </property>
+                    <property name="mouseTracking">
+                     <bool>false</bool>
+                    </property>
+                   </widget>
+                   <widget class="QSplitter" name="hsplitAnnotationPageView">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="childrenCollapsible">
+                     <bool>false</bool>
+                    </property>
+                    <widget class="QOpenGLWidget" name="openGLWidget">
+                     <property name="cursor">
+                      <cursorShape>CrossCursor</cursorShape>
+                     </property>
+                    </widget>
+                    <widget class="QOpenGLWidget" name="openGLWidget_2">
+                     <property name="cursor">
+                      <cursorShape>CrossCursor</cursorShape>
+                     </property>
+                    </widget>
+                    <widget class="QOpenGLWidget" name="openGLWidget_3">
+                     <property name="cursor">
+                      <cursorShape>CrossCursor</cursorShape>
+                     </property>
+                    </widget>
+                   </widget>
+                  </widget>
+                  <widget class="QTabWidget" name="annotationPageinfo">
+                   <widget class="QWidget" name="tab_3">
+                    <attribute name="title">
+                     <string>Tab 1</string>
+                    </attribute>
+                   </widget>
+                   <widget class="QWidget" name="tab_4">
+                    <attribute name="title">
+                     <string>Tab 2</string>
+                    </attribute>
+                   </widget>
+                  </widget>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
             </widget>
             <widget class="QWidget" name="analysisPage">
              <widget class="QLabel" name="label_3">

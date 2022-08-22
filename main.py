@@ -44,6 +44,19 @@ class MainWindow(QMainWindow):
         # navigating to about page
         self.window.aboutBtn.clicked.connect(lambda: self.window.stackedWidget.setCurrentWidget(self.window.aboutPage))
 
+        self.window.hspltAnnotationPage.setSizes([self.window.hspltAnnotationPage.size().height() * 0.7,
+                                                self.window.hspltAnnotationPage.size().height() * 0.3])
+
+        self.window.vsplitAnnotationPageView.setSizes([self.window.vsplitAnnotationPageView.size().height()*0.7,
+                                                        self.window.vsplitAnnotationPageView.size().height()*0.3])
+
+        self.window.hsplitAnnotationPageView.setSizes([self.window.hsplitAnnotationPageView.size().width()*0.33,
+                                                        self.window.hsplitAnnotationPageView.size().width()*0.33,
+                                                        self.window.hsplitAnnotationPageView.size().width()*0.33])
+
+        #self.window.hspltAnnotationPage.sizePolicy().setHorizontalStretch(4)
+        #self.window.hspltAnnotationPage.sizePolicy().setHorizontalStretch(6)
+
         ui_file.close()
 
     def show(self):
