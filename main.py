@@ -54,9 +54,6 @@ class MainWindow(QMainWindow):
                                                         self.window.hsplitAnnotationPageView.size().width()*0.33,
                                                         self.window.hsplitAnnotationPageView.size().width()*0.33])
 
-        #self.window.hspltAnnotationPage.sizePolicy().setHorizontalStretch(4)
-        #self.window.hspltAnnotationPage.sizePolicy().setHorizontalStretch(6)
-
         ui_file.close()
 
     def show(self):
