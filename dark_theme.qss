@@ -1,0 +1,31 @@
+*{
+    border:none;
+    background-color:transparent;
+    background:transparent;
+    padding:0;
+    margin:0;
+    color:#fff;
+}
+
+[accessibleName="centralwidget"]{
+    background-color:#242424;
+}
+
+[accessibleName="mainBodyContent"]{
+    background-color:#242424;
+}
+
+[accessibleName="header"]{
+    background-color:#141414;
+}
+
+[accessibleName="mainBody"]{
+    background-color:#141414;
+}
+
+QPushButton{
+    text-align: left;
+    padding: 5px 5px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
