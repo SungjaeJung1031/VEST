@@ -4,12 +4,9 @@ from PySide6 import QtWidgets, QtGui, QtCore
 class Header(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(Header, self).__init__(parent)
-        # self.dark_theme = open('dark_theme_header.qss').read()
-        # self.setStyleSheet(self.dark_theme)
         self.setupUi()
 
     def setupUi(self):
-        # self.header = QtWidgets.QWidget(self.centralwidget)
         self.setObjectName("header")
        
         self.hlytHeader = QtWidgets.QHBoxLayout(self)
