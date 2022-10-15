@@ -127,7 +127,7 @@ class MainWindow(QMainWindow):
     ##################################################
     def slideLeftMenu(self):
         # Get current left menu width
-        width = self.main_body.left_menu.frame_left_menu_top.width()
+        width = self.main_body.left_menu.frame_top.width()
         new_width = 0
         # If minimized
         if width >= 120:
@@ -141,7 +141,7 @@ class MainWindow(QMainWindow):
             # print(2)
 
         # Animate the transition
-        self.animation_leftmenutop = QtCore.QPropertyAnimation(self.main_body.left_menu.frame_left_menu_top, b"minimumWidth")  # Animate minimimWidth
+        self.animation_leftmenutop = QtCore.QPropertyAnimation(self.main_body.left_menu.frame_top, b"minimumWidth")  # Animate minimimWidth
         self.animation_leftmenutop.setDuration(250)
         # print("width:{}, new_width:{}".format(width, new_width))
         self.animation_leftmenutop.setStartValue(width)     # start value is the current menu width
@@ -149,7 +149,7 @@ class MainWindow(QMainWindow):
         self.animation_leftmenutop.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
         #self.animation.start()
 
-        self.animation_leftmenubottom = QtCore.QPropertyAnimation(self.main_body.frame_left_menu_bottom, b"minimumWidth")  # Animate minimimWidth
+        self.animation_leftmenubottom = QtCore.QPropertyAnimation(self.main_body.left_menu.frame_bottom, b"minimumWidth")  # Animate minimimWidth
         self.animation_leftmenubottom.setDuration(250)
         # print("width:{}, new_width:{}".format(width, new_width))
         self.animation_leftmenubottom.setStartValue(width)     # start value is the current menu width
@@ -170,4 +170,4 @@ class MainWindow(QMainWindow):
         
     def loadNuscenes(self):
         self.data_mgr.loadNuscenes()
-        self.main_body.set_slider_range(len(self.data_mgr.nusc.sample))
+        self.main_body.annotation_page.setSliderRange(len(self.data_mgr.nusc.sample))
