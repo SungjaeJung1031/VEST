@@ -14,7 +14,7 @@ class MainBody(QtWidgets.QWidget):
         self.setupUi()
 
         self.cur_frm = 0
-
+        
     def setupUi(self):
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)

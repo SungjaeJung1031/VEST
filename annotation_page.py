@@ -4,6 +4,16 @@ import time
 
 from top_view_annotation_page import TopViewAnnotationPage
 
+
+from wgpu.gui.qt import WgpuWidget
+import wgpu.backends.rs  # noqa: F401, Select Rust backend
+from triangle import main
+from triangle_qt_embed_test import ExampleWidget
+from wgpu_top_view import WgpuTopView
+from wgpu_bottom_left_view import WgpuBottomLeftView
+from wgpu_bottom_center_view import WgpuBottomCenterView
+from wgpu_bottom_right_view import WgpuBottomRightView
+
 class AnnotationPage(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(AnnotationPage, self).__init__(parent)
@@ -55,15 +65,23 @@ class AnnotationPage(QtWidgets.QWidget):
         self.vsplt_view_annotation_page = QtWidgets.QSplitter(self.hsplt_main_annotation_page)
 
         #self.opengl_top_view = QtOpenGLWidgets.QOpenGLWidget(self.vsplt_view_annotation_page)
-        self.opengl_top_view = TopViewAnnotationPage(self.vsplt_view_annotation_page)
-        self.opengl_top_view.show()
+
+        # self.opengl_top_view = TopViewAnnotationPage(self.vsplt_view_annotation_page)
+        # self.opengl_top_view.show()
+        # self.opengl_top_view = ExampleWidget(self.vsplt_view_annotation_page)
+        # self.wgpu_top_view = WgpuWidget(self.vsplt_view_annotation_page)
+        # main(self.wgpu_top_view)
+
+        self.wgpu_top_view = WgpuTopView(self.vsplt_view_annotation_page)
+
         # self.opengl_top_view.initRender()
 
         self.hsplt_view_annotation_page = QtWidgets.QSplitter(self.vsplt_view_annotation_page)
 
-        self.opengl_bottom_left = QtOpenGLWidgets.QOpenGLWidget(self.hsplt_view_annotation_page)
-        self.opengl_bottom_center = QtOpenGLWidgets.QOpenGLWidget(self.hsplt_view_annotation_page)
-        self.opengl_bottom_right = QtOpenGLWidgets.QOpenGLWidget(self.hsplt_view_annotation_page)
+
+        self.wgpu_bottom_left_view = WgpuBottomLeftView(self.hsplt_view_annotation_page)
+        self.wgpu_bottom_center_view = WgpuBottomCenterView(self.hsplt_view_annotation_page)
+        self.wgpu_bottom_right_view = WgpuBottomRightView(self.hsplt_view_annotation_page)
 
         #### annotation info
         self.annotation_page_info = QtWidgets.QTabWidget(self.hsplt_main_annotation_page)
@@ -242,26 +260,23 @@ class AnnotationPage(QtWidgets.QWidget):
         self.vsplt_view_annotation_page.setChildrenCollapsible(False)
         self.vsplt_view_annotation_page.setObjectName("vsplt_view_annotation_page")
 
-        
-        self.opengl_top_view.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.CrossCursor))
-        self.opengl_top_view.setMouseTracking(False)
-        self.opengl_top_view.setObjectName("opengl_top_view")
+        self.wgpu_top_view.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.CrossCursor))
+        self.wgpu_top_view.setMouseTracking(False)
+        self.wgpu_top_view.setObjectName("wgpu_top_view")
 
         self.hsplt_view_annotation_page.setOrientation(QtCore.Qt.Orientation.Horizontal)
         self.hsplt_view_annotation_page.setChildrenCollapsible(False)
         self.hsplt_view_annotation_page.setObjectName("hsplt_view_annotation_page")
 
         
-        self.opengl_bottom_left.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.CrossCursor))
-        self.opengl_bottom_left.setObjectName("opengl_bottom_left")
+        self.wgpu_bottom_left_view.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.CrossCursor))
+        self.wgpu_bottom_left_view.setObjectName("wgpu_bottom_left_view")
 
-        
-        self.opengl_bottom_center.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.CrossCursor))
-        self.opengl_bottom_center.setObjectName("opengl_bottom_center")
+        self.wgpu_bottom_center_view.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.CrossCursor))
+        self.wgpu_bottom_center_view.setObjectName("wgpu_bottom_center_view")
 
-        
-        self.opengl_bottom_right.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.CrossCursor))
-        self.opengl_bottom_right.setObjectName("opengl_bottom_right")
+        self.wgpu_bottom_right_view.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.CrossCursor))
+        self.wgpu_bottom_right_view.setObjectName("wgpu_bottom_right_view")
 
         #### annotation info
         self.annotation_page_info.setObjectName("annotation_page_info")
@@ -279,7 +294,7 @@ class AnnotationPage(QtWidgets.QWidget):
 
         self.tab_annotation_page.setCurrentIndex(0)
         self.annotation_page_info.setCurrentIndex(0)
-
+        
     def retranslateUi(self, _translate):
         self.tab_annotation_page.setTabText(self.tab_annotation_page.indexOf(self.tab_control_main_annotation_page), _translate("MainWindow", "Play Controls"))
         self.tab_annotation_page.setTabText(self.tab_annotation_page.indexOf(self.tab_radar_config_main_annotation_page), _translate("MainWindow", "View Configuration"))

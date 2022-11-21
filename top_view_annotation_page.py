@@ -163,3 +163,54 @@ class TopViewAnnotationPage(QOpenGLWidget):
         # gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT)
         # gl.glFlush()
     
+
+
+
+
+# class TopViewAnnotationPage(QtGui.QWindow):
+#     """
+#     This class defines the Qt OpenGL widget, which is the main object for performing all openGL
+#     graphics programming.  The functions initializeGL, resizeGL, paintGL must be defined.
+#     """
+    
+#     def __init__(self):
+#         super(TopViewAnnotationPage, self).__init__()
+
+#         self.setWidth(1280)
+#         self.setHeight(720)
+
+#         self.setTitle("Vulkan Python - PySide2")
+
+#         #self.setSurfaceType(self.OpenGLSurface)
+
+#         self.__instance = None
+
+#         self.initVulkan()
+
+#     def __del__(self):
+#         if self.__instance:
+#             vkDestroyInstance(self.__instance, None)
+#             print('instance destroyed')
+
+#     def initVulkan(self):
+#         self.__cretaeInstance()
+
+#     def __cretaeInstance(self):
+#         appInfo = VkApplicationInfo(
+#             # sType=VK_STRUCTURE_TYPE_APPLICATION_INFO,
+#             pApplicationName='Python VK',
+#             applicationVersion=VK_MAKE_VERSION(1, 0, 0),
+#             pEngineName='pyvulkan',
+#             engineVersion=VK_MAKE_VERSION(1, 0, 0),
+#             apiVersion=VK_API_VERSION
+#         )
+
+#         extenstions = [e.extensionName for e in vkEnumerateInstanceExtensionProperties(None)]
+#         instanceInfo = VkInstanceCreateInfo(
+#             pApplicationInfo=appInfo,
+#             enabledLayerCount=0,
+#             enabledExtensionCount=len(extenstions),
+#             ppEnabledExtensionNames=extenstions
+#         )
+
+#         self.__instance = vkCreateInstance(instanceInfo, None)
